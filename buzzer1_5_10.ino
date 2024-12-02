@@ -178,10 +178,11 @@ int noteDurations9[] = {
 };
 
 int melody10[] = { //Theme from Mission: Impossible by Lalo Schifrin
-  110, 110, 131, 147, 110, 110, 98, 104, 110, 110, 131, 147, 110, 110, 98, 104,
-  131, 110, 82, 131, 110, 156, 131, 110, 73, 65, 73, 110, 110, 131, 147, 110,
-  110, 98, 104, 131, 110, 415, 131, 110, 415, 131, 110, 370, 349, 329, 110,
-  131, 147, 110, 110, 98, 104, 110, 110, 131, 147, 110, 110, 98, 104
+  220, 220, 262, 294, 220, 220, 196, 208, 220, 220, 262, 294, 220, 220, 196, 208, 
+  262, 220, 164, 262, 220, 312, 262, 220, 146, 130, 146,
+  220, 220, 262, 294, 220, 220, 196, 208, 262, 220, 415, 262, 220, 415,
+  262, 220, 370, 349, 330,
+  220, 262, 294, 220, 220, 196, 208, 220, 220, 262, 294, 220, 220, 196, 208
 };
 int noteDurations10[] = { 
   303, 480, 303, 303, 303, 480, 303, 303, 303, 480, 303, 303, 303, 480, 303, 303,
@@ -189,7 +190,7 @@ int noteDurations10[] = {
   303, 480, 303, 303, 126, 126, 1362, 126, 126, 1362, 126, 126, 1362, 126, 126,
   303, 303, 303, 303, 480, 303, 303, 303, 480, 303, 303, 303, 480, 303, 303
 };
-int pausDurations10[] = { 50,
+int pausDurations10[] = { 100,
   353, 50, 50, 50, 353, 50, 50, 50, 353, 50, 50, 50, 353, 50, 50, 50,
   50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 353, 50, 50, 50, 353,
   50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 10, 50, 50, 50,
@@ -265,8 +266,8 @@ void ledlichter(int a) {
 }
 
 
-void ar1song(int melody[], int tempo) {
-  int notes = sizeof(melody) / sizeof(melody[0]) / 2;
+void ar1song(int melody[], int tempo, int arraySize) {
+  int notes = arraySize / 2;
   int wholenote = (60000 * 4) / tempo;
   int divider = 0, noteDuration = 0;
   for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
@@ -304,9 +305,9 @@ void ar1song(int melody[], int tempo) {
   }
 }
 
-void ar2song(int melody[], int noteDurations[]) { 
+void ar2song(int melody[], int noteDurations[], int arraySize) { 
   delay(50);
-  for (int curentNote = 0; curentNote < sizeof(melody) / sizeof(melody[0]); curentNote++)
+  for (int curentNote = 0; curentNote < arraySize; curentNote++)
   {
     butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
     butStatBreak = !digitalRead(butBreak);
@@ -338,95 +339,97 @@ void ar2song(int melody[], int noteDurations[]) {
   }
 }
 
-void ar3song(int melody[], int noteDurations[], int pausDurations[]) { 
-  for (int curentNote = 0; curentNote < sizeof(melody) / sizeof(melody[0]); curentNote++)
-  {
-    int pauseDuration = pausDurations[curentNote];
-    butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
-    butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
-      if(butStatBreak)
-      {
-       break;
-      }
-        else
-        {
-         if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
-          {
-            int ret=0;
-            ret = pauseLoop();
-            if(ret)
-            {
-             break;
-            }
-          } 
-            else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
-            {
-              int noteDuration = noteDurations[curentNote];
-              tone(buzzer1, melody[curentNote]);
-             delay(noteDuration);
 
-             noTone(buzzer1);
-            }
+void ar3song(int melody[], int noteDurations[], int pausDurations[], int arraySize) { 
+  for (int curentNote = 0; curentNote < arraySize; curentNote++) {
+    int pauseDuration = pausDurations[curentNote];
+    bool butStatPlayPause = !digitalRead(butPlayPause); // Read the play/pause button
+    bool butStatBreak = !digitalRead(butBreak);
+
+    delay(pauseDuration);
+    
+    if (butStatBreak) {
+      break; // Exit the loop if the break button is pressed
+    } else {
+      if (butStatPlayPause) { // Pause functionality
+        int ret = 0;
+        ret = pauseLoop(); // Pause until button is pressed again
+        if (ret) {
+          break;
         }
+      } else { // Play the current note and pause
+        int noteDuration = noteDurations[curentNote];
+        tone(buzzer1, melody[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
   }
 }
 
 void playSong (int a) {
 switch (a) {
 case 1: {
-    ar3song(melody1, noteDurations1, pausDurations1);
-    break;
+  unsigned char arraySize = sizeof(melody1) / sizeof(melody1[0]);
+  ar3song(melody1, noteDurations1, pausDurations1, arraySize);
+  break;
 }
 case 2: {
-    ar2song(melody2, noteDurations2);
-    break;
+  unsigned char arraySize = sizeof(melody2) / sizeof(melody2[0]);
+  ar2song(melody2, noteDurations2, arraySize);
+  break;
 }
 
 case 3: {
-    ar1song(melody3, 200);
-    break;
+  unsigned char arraySize = sizeof(melody3) / sizeof(melody3[0]);
+  ar1song(melody3, 200, arraySize);
+  break;
 }
 
 case 4: {
-    ar2song(melody4, noteDurations4);
-    break;
+  unsigned char arraySize = sizeof(melody4) / sizeof(melody4[0]);
+  ar2song(melody4, noteDurations4, arraySize);
+  break;
 }
 
 case 5: {
-    ar1song(melody5, 85);
-    break;
+  unsigned char arraySize = sizeof(melody5) / sizeof(melody5[0]);
+  ar1song(melody5, 85, arraySize);
+  break;
 }
 
 case 6: {
-    ar3song(melody6, noteDurations6, pausDurations6);
-    break;
+  unsigned char arraySize = sizeof(melody6) / sizeof(melody6[0]);
+  ar3song(melody6, noteDurations6, pausDurations6, arraySize);
+  break;
 }
 
 case 7: {
-    ar3song(melody7, noteDurations7, pausDurations7);
-    break;
+  unsigned char arraySize = sizeof(melody7) / sizeof(melody7[0]);
+  ar3song(melody7, noteDurations7, pausDurations7, arraySize);
+  break;
 }
 
 case 8: {
-    ar3song(melody8, noteDurations8, pausDurations8);
-    break;
+  unsigned char arraySize = sizeof(melody8) / sizeof(melody8[0]);
+  ar3song(melody8, noteDurations8, pausDurations8, arraySize);
+  break;
 }
 
 case 9: {
-    ar2song(melody9, noteDurations9);
-    break;
+  unsigned char arraySize = sizeof(melody9) / sizeof(melody9[0]);
+  ar2song(melody9, noteDurations9, arraySize);
+  break;
 }
 
-case 10:{
-ar3song(melody10, noteDurations10, pausDurations10);
-break;
-}
+case 10:
+  unsigned char arraySize = sizeof(melody10) / sizeof(melody10[0]);
+  ar3song(melody10, noteDurations10, pausDurations8, arraySize);
+  break;
 /*
-case 11:{
+case 11:
 
 break;
-}
 case 12:
 
 break;

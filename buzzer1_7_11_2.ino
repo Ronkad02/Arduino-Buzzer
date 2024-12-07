@@ -11,6 +11,7 @@ const short ledPlayPause = 3;
 const short buzzer1 = 2;
 
 
+
 bool butStatStart = 0;
 bool butStatLinksDown = 0;
 bool butStatRechtsUp = 0;
@@ -140,7 +141,7 @@ short pausDurations7[] = { 100,
 };
 
 
-short melody8[] = { //Hes the Pirat (Fluch der Karribik)
+short melody8[] = { //Hes the Pirat (Fluch der Karibik)
   220, 261, 293, 293, 293, 329, 349, 349, 349, 392, 329, 329, 293, 261, 261, 293, 
   220, 261, 293, 293, 293, 329, 349, 349, 349, 392, 329, 329, 293, 261, 293
 };
@@ -193,7 +194,6 @@ short melody11[] = {  //I'm Blue
   587, 523, 466, 293, 392, 466, 523, 349, 440, 466, 392, 466, 587, 622, 392, 587, 523, 466,
   293, 392, 466, 523, 349, 440, 466, 392, 466, 587, 622, 392, 587, 523, 466, 293, 392, 466,
   440, 261, 349, 392
-
 };
 short noteDurations11[] = { 
   211, 211, 211, 211, 211, 211, 211, 472, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 
@@ -204,6 +204,13 @@ short noteDurations11[] = {
   211, 472, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 472
 };
 
+short melodyino[] = {  //Intro
+  233, 233, 294, 233, 294, 233
+};
+short noteDurationsino[] = { 
+  250, 100, 400, 250, 250, 250, 850
+};
+void ar2song(short melody[], short noteDurations[], unsigned char arraySize);
 
 void setup(){
 pinMode(butRechtsUp, INPUT_PULLUP);
@@ -216,11 +223,12 @@ pinMode(led1, OUTPUT);
 pinMode(led2, OUTPUT);
 pinMode(led3, OUTPUT);
 pinMode(buzzer1, OUTPUT);
+ar2song(melodyino, noteDurationsino, sizeof(melodyino) / sizeof(melodyino[0]));
 }
 
 
 bool pauseLoop () {
-  int helligkeit=0;
+  unsigned char helligkeit=0;
   digitalWrite(ledPlayPause, HIGH);
     while (true) 
     {
@@ -427,7 +435,7 @@ void ar3esong(short melody[], short noteDurations[], unsigned char eepromstart, 
   }
 }
 
-//array wiederholen, ohne wiederholung der Pausen aus EEProm
+//array wiederholen, ohne wiederholung der Pausen aus EEPROM
 void ar3e2song(short melody[], short noteDurations[], unsigned char eepromstart, unsigned char arraySize) {
   for (unsigned short curentNote = 0; curentNote < arraySize; curentNote++)
   {
@@ -578,4 +586,3 @@ void loop() {
   }
   delay(300);
 }
-

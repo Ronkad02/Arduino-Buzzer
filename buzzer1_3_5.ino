@@ -3,11 +3,11 @@ const int butLinksUp = 11;
 const int butRechtsDown = 10;
 const int butPlayPause = 9;
 const int butBreak = 8;
-const int ledPlayPause = 7;
-const int led0 = 6;
-const int led1 = 5;
-const int led2 = 4;
-const int led3 = 3;
+const int ledPlayPause = 3;
+const int led0 = 7;
+const int led1 = 6;
+const int led2 = 5;
+const int led3 = 4;
 const int buzzer1 =2;
 
 int butStatStart = 0;
@@ -171,9 +171,15 @@ pinMode(buzzer1, OUTPUT);
 
 void pauseLoop ()
 {
+  int helligkeit=20;
   digitalWrite(ledPlayPause, HIGH);
     while (true) 
     {
+      helligkeit += 20;
+      if (helligkeit>255){
+        helligkeit=20;
+      }
+      analogWrite(ledPlayPause, helligkeit);
       delay(300);
       butStatLinksUp = !digitalRead(butLinksUp);
       butStatRechtsDown = !digitalRead(butRechtsDown);
@@ -616,7 +622,6 @@ break;
 */
 }
 }
-
 
 
 void loop() {

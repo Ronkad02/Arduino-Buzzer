@@ -10,6 +10,7 @@ const int led2 = 5;
 const int led3 = 4;
 const int buzzer1 =2;
 
+
 int butStatStart = 0;
 int butStatLinksUp = 0;
 int butStatRechtsDown = 0;
@@ -122,8 +123,7 @@ int pausDurations4[] = {
 };
 
 
-int melody5[] = {
-  // Game of Thrones
+int melody5[] = { // Game of Thrones
   // Score available at https://musescore.com/user/8407786/scores/2156716
   392,8, 262,8, 311,16, 349,16, 392,8, 262,8, 311,16, 349,16, //1
   392,8, 262,8, 311,16, 349,16, 392,8, 262,8, 311,16, 349,16,
@@ -136,9 +136,21 @@ int melody5[] = {
   311,16, 349,16, 392,4, 262,4, 311,16, 349,16, 294,-2,
 };
 
-int melody6[] = {};
-int noteDurations6[] = {};
-int pausDurations6[] = {};
+int melody6[] = {//a million Dream (the greates Showman)
+    246, 246, 261, 294, 294, 261, 246, 261, 294, 294,
+    261, 246, 261, 294, 294, 261, 329, 329, 261, 246,
+    246, 392, 440, 246, 294, 329, 131, 147, 440
+};
+int noteDurations6[] = {
+    200, 450, 200, 200, 700, 200, 450, 200, 200, 700,
+    200, 450, 200, 200, 450, 200, 200, 450, 200, 200,
+    1450, 200, 200, 950, 950, 950, 950, 950, 950
+};
+int pausDurations6[] = {
+    50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+    50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+    50, 50, 50, 50, 50, 50, 50, 50, 50
+};
 
 int melody7[] = {};
 int noteDurations7[] = {};

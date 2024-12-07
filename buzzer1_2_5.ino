@@ -15,9 +15,8 @@ int butStatLinksUp = 0;
 int butStatRechtsDown = 0;
 int butStatPlayPause = 0;
 int butStatBreak = 0;
-
+int b = 1;
 int ledLichtZaehler = 0;
-bool playingSong = 0;
 
 int maxLieder = 9;  //max 15; min 1
 
@@ -261,7 +260,6 @@ void ledlichter(int a)
      }
 
   }
-  delay(300);
 }
 
 void song1()
@@ -622,27 +620,36 @@ break;
 
 
 void loop() {
-
   butStatStart = !digitalRead(butStart);
   butStatLinksUp = !digitalRead(butLinksUp);
   butStatRechtsDown = !digitalRead(butRechtsDown);
-
+  butStatPlayPause = !digitalRead(butPlayPause);
+  if (butStatPlayPause)
+  {
+    if (b==1)
+    {
+    b=2;
+    }else {
+      b=1;
+      }
+  }
+  
   if (butStatLinksUp)
   {
-    ledLichtZaehler = ledLichtZaehler + 1;
+    ledLichtZaehler = ledLichtZaehler + b;
     ledlichter(ledLichtZaehler);
   }
 
   if (butStatRechtsDown)
   {
-    ledLichtZaehler = ledLichtZaehler - 1;
+    ledLichtZaehler = ledLichtZaehler - b;
     ledlichter(ledLichtZaehler);
   }
 
   if (butStatStart && ledLichtZaehler>0)
   {
-    playingSong = 1;
     playSong(ledLichtZaehler);
   }
+  delay(300);
   loop();
 }

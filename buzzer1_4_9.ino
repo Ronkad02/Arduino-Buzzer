@@ -1,6 +1,6 @@
 const int butStart = 12;
-const int butLinksUp = 11;
-const int butRechtsDown = 10;
+const int butLinksUp = 10;
+const int butRechtsDown = 11;
 const int butPlayPause = 9;
 const int butBreak = 8;
 const int ledPlayPause = 3;
@@ -196,14 +196,14 @@ pinMode(led3, OUTPUT);
 pinMode(buzzer1, OUTPUT);
 }
 
-void pauseLoop ()
+bool pauseLoop ()
 {
-  int helligkeit=20;
+  int helligkeit=0;
   digitalWrite(ledPlayPause, HIGH);
     while (true) 
     {
       helligkeit += 20;
-      if (helligkeit>255){
+      if (helligkeit>200){
         helligkeit=20;
       }
       analogWrite(ledPlayPause, helligkeit);
@@ -214,8 +214,9 @@ void pauseLoop ()
       butStatBreak = !digitalRead(butBreak);
       if (butStatPlayPause)
       {
-        delay(700);
-        break;
+        delay(500);
+        digitalWrite(ledPlayPause, LOW);
+        return 0;
       }
       if(butStatBreak)
       {
@@ -225,7 +226,7 @@ void pauseLoop ()
       if(butStatLinksUp||butStatRechtsDown)
       {
        digitalWrite(ledPlayPause, LOW);
-       loop();
+       return 1;
       }
     }
   digitalWrite(ledPlayPause, LOW);
@@ -265,7 +266,12 @@ void song1()
         {
          if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
           {
-            pauseLoop();
+            int ret=0;
+            ret = pauseLoop();
+            if(ret)
+            {
+             break;
+            }
           } 
             else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
             {
@@ -295,7 +301,12 @@ void song2()
         {
          if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
           {
-            pauseLoop();
+            int ret=0;
+            ret = pauseLoop();
+            if(ret)
+            {
+              break;
+            }
           } 
             else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
             {
@@ -326,7 +337,12 @@ void song3()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -348,7 +364,7 @@ void song3()
 void song4()
 {
   delay (50);
-for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); curentNote++)
+  for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); curentNote++)
   {
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
@@ -362,7 +378,12 @@ for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); cure
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -392,7 +413,12 @@ void song5()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -427,7 +453,12 @@ void song6()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -457,7 +488,12 @@ void song7()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret=pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -487,7 +523,12 @@ void song8()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -517,7 +558,12 @@ void song9()
     {
       if (butStatPlayPause)
       {
-        pauseLoop();
+        int ret=0;
+        ret = pauseLoop();
+        if(ret)
+        {
+          break;
+        }
       }
       else
       {
@@ -637,5 +683,4 @@ void loop() {
     playSong(ledLichtZaehler);
   }
   delay(300);
-  loop();
 }

@@ -124,39 +124,55 @@ int melody5[] = { // Game of Thrones
 int melody6[] = {//a million Dream (the greates Showman)
   246, 246, 261, 294, 294, 261, 246, 261, 294, 294, 261, 246, 261, 294, 294, 261, 
   330, 330, 261, 246, 246, 196, 220, 246, 294, 330
-  };
+};
 int noteDurations6[] = {
   200, 450, 200, 225, 725, 200, 450, 200, 225, 725, 200, 450, 200, 225, 475, 200,
   225, 475, 200, 225, 1475, 200, 200, 950, 950, 950
-  };
+};
 int pausDurations6[] = {
   50, 50, 50, 0, 50, 50, 50, 50, 0, 50, 50, 50, 50, 0, 50, 50, 
   0, 50, 50, 0, 50, 50, 50, 50, 50, 50
-  };
+};
 
 
 int melody7[] = {//Für Elise (Beethoven)
   330, 311, 330, 311, 330, 246, 294, 261, 220, 130, 330, 220, 246, 330, 208, 246, 261, 330, 311, 
   330, 311, 330, 246, 294, 261, 220, 130, 330, 220, 246, 261, 246, 220
-  };
+};
 int noteDurations7[] = {
   171, 171, 171, 171, 171, 171, 171, 171, 632, 171, 171, 171, 491, 171, 171, 171, 391, 
   171, 171, 171, 171, 171, 171, 171, 171, 632, 171, 171, 171, 491, 171, 171, 391
-  };
+};
 int pausDurations7[] = { 100,
   50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 150, 50, 50, 50, 491, 
   50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 150, 50, 50, 50
-  };
+};
 
 
-int melody8[] = {};
-int noteDurations8[] = {};
-int pausDurations8[] = {};
+int melody8[] = { //Hes the Pirat (Fluch der Karribik)
+  220, 261, 293, 293, 293, 329, 349, 349, 349, 392, 329, 329, 293, 261, 261, 293, 
+  220, 261, 293, 293, 293, 329, 349, 349, 349, 392, 329, 329, 293, 261, 293
+};
 
-int melody9[] = {};
-int noteDurations9[] = {};
-int pausDurations9[] = {};
+int noteDurations8[] = { 
+  200, 200, 450, 450, 200, 200, 450, 450, 200, 200, 450, 450, 
+  200, 200, 200, 450, 200, 200, 450, 450, 200, 200, 450, 450, 
+  200, 200, 450, 450, 200, 200, 700
+};
 
+int pausDurations8[] = {
+  100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+  50, 50, 50, 250, 50, 50, 50, 50, 50, 50, 50, 50, 
+  50, 50, 50, 50, 50, 50, 50
+};
+
+
+int melody9[] = {
+};
+int noteDurations9[] = {
+};
+int pausDurations9[] = {
+};
 
 
 void setup()
@@ -482,7 +498,7 @@ void song9()
 {
   for (int curentNote = 0; curentNote < sizeof(melody9) / sizeof(melody9[0]); curentNote++)
   {
-    int pauseDuration = pausDurations9[curentNote];
+    int pauseDuration = pausDurations8[curentNote];
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
     delay(pauseDuration);

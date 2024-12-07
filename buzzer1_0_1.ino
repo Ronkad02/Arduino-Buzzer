@@ -21,6 +21,9 @@ bool playingSong = 0;
 
 int maxLieder = 15;  //max 15; min 1
 
+
+
+
 //Liederarrays
 int melody1[] = {   //Happy Birthday 2 Strophen
   238, 238, 267, 238, 317, 297,
@@ -55,9 +58,62 @@ int pausDurations1[] = {
 };
 
 
+int melody2[] = {   //Wallermann
+  392, 261, 261, 261, 330,
+  392, 392, 392, 392, 440,
+  349, 349, 349, 349, 440,
+  523, 523, 392, 392, 392,
+  261, 261, 261, 330, 392,
+  392, 392, 392, 392, 349,
+  330, 330, 293, 261
+};
+int noteDurations2[] = {
+  450, 450, 450, 450, 450,
+  450, 450, 700, 200, 450,
+  200, 200, 450, 200, 200,
+  200, 200, 450, 700, 200,
+  450, 450, 450, 200, 450,
+  450, 700, 200, 450, 450,
+  200, 200, 450, 950
+};
+int pausDurations2[] = {
+  100,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50, 50,
+  50, 50, 50, 50
+};
 
+int melody3[] = {};
+int noteDurations3[] = {};
+int pausDurations3[] = {};
 
+int melody4[] = {};
+int noteDurations4[] = {};
+int pausDurations4[] = {};
 
+int melody5[] = {};
+int noteDurations5[] = {};
+int pausDurations5[] = {};
+
+int melody6[] = {};
+int noteDurations6[] = {};
+int pausDurations6[] = {};
+
+int melody7[] = {};
+int noteDurations7[] = {};
+int pausDurations7[] = {};
+
+int melody8[] = {};
+int noteDurations8[] = {};
+int pausDurations8[] = {};
+
+int melody9[] = {};
+int noteDurations9[] = {};
+int pausDurations9[] = {};
 
 
 
@@ -76,79 +132,81 @@ pinMode(led3, OUTPUT);
 pinMode(buzzer1, OUTPUT);
 }
 
+void pauseLoop ()
+{
+  digitalWrite(ledPlayPause, HIGH);
+  bool paus=1;
+  delay(200);
+    while (paus) 
+    {
+      butStatPlayPause = !digitalRead(butPlayPause);   //Play
+      butStatBreak = !digitalRead(butBreak);
+      if (butStatPlayPause)
+      {
+        paus = 0;
+      }
+      if(butStatBreak)
+      {
+       digitalWrite(ledPlayPause, LOW);
+       break;
+      }
+      delay(200);
+    }
+  digitalWrite(ledPlayPause, LOW);
+}
 
 
 void playSong (int a)
 {
-bool paus=0;
-
 switch (a)
 {
 case 1:
 {
-  
-  for (int curentNote = 0; curentNote < sizeof(melody1) / sizeof(melody1[0]); curentNote++)
-  {
-    int pauseDuration = pausDurations1[curentNote];
-    butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
-    butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
-      if(butStatBreak)
-      {
-       break;
-      }
-        else
-        {
-         if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
-          {
-            paus=1;
-            delay(200);
-              while (paus) 
-              {
-                butStatPlayPause = !digitalRead(butPlayPause);   //Play
-                 if (butStatPlayPause)
-                  {
-                    paus = 0;
-                  }
-                delay(200);
-              }
-          } 
-            else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
-            {
-              int noteDuration = noteDurations1[curentNote];
-              tone(buzzer1, melody1[curentNote]);
-             delay(noteDuration);
-
-             noTone(buzzer1);
-            }
-        }
-  } 
-break;
+    song1 ();
+    break;
 }
-/*case 2:
+case 2:
+{
+    song2();
+    break;
+}
 
-break;
-case 3:
+case 3: {
+    song3();
+    break;
+}
 
-break;
-case 4:
+case 4: {
+    song4();
+    break;
+}
 
-break;
-case 5:
+case 5: {
+    song5();
+    break;
+}
 
-break;
-case 6:
+case 6: {
+    song6();
+    break;
+}
 
-break;
-case 7:
+case 7: {
+    song7();
+    break;
+}
 
-break;
-case 8:
+case 8: {
+    song8();
+    break;
+}
 
-break;
-case 9:
+case 9: {
+    song9();
+    break;
+}
 
-break;
+/*
 case 10:
 
 break;
@@ -238,6 +296,280 @@ void ledlichter(int a)
   }
   delay(300);
 }
+
+void song1()
+{
+    
+  for (int curentNote = 0; curentNote < sizeof(melody1) / sizeof(melody1[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations1[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+      if(butStatBreak)
+      {
+       break;
+      }
+        else
+        {
+         if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
+          {
+            pauseLoop();
+          } 
+            else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
+            {
+              int noteDuration = noteDurations1[curentNote];
+              tone(buzzer1, melody1[curentNote]);
+             delay(noteDuration);
+
+             noTone(buzzer1);
+            }
+        }
+  }
+}
+
+void song2()
+{ 
+  for (int curentNote = 0; curentNote < sizeof(melody2) / sizeof(melody2[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations2[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+      if(butStatBreak)
+      {
+       break;
+      }
+        else
+        {
+         if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
+          {
+            pauseLoop();
+          } 
+            else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
+            {
+              int noteDuration = noteDurations2[curentNote];
+              tone(buzzer1, melody2[curentNote]);
+             delay(noteDuration);
+
+             noTone(buzzer1);
+            }
+        }
+  } 
+}
+
+void song3()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody3) / sizeof(melody3[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations3[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations3[curentNote];
+        tone(buzzer1, melody3[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song4()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations4[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations4[curentNote];
+        tone(buzzer1, melody4[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song5()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody5) / sizeof(melody5[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations5[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations5[curentNote];
+        tone(buzzer1, melody5[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song6()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody6) / sizeof(melody6[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations6[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations6[curentNote];
+        tone(buzzer1, melody6[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song7()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody7) / sizeof(melody7[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations7[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations7[curentNote];
+        tone(buzzer1, melody7[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song8()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody8) / sizeof(melody8[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations8[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations8[curentNote];
+        tone(buzzer1, melody8[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+void song9()
+{
+  for (int curentNote = 0; curentNote < sizeof(melody9) / sizeof(melody9[0]); curentNote++)
+  {
+    int pauseDuration = pausDurations9[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+
+    if (butStatBreak)
+    {
+      break;
+    }
+    else
+    {
+      if (butStatPlayPause)
+      {
+        pauseLoop();
+      }
+      else
+      {
+        int noteDuration = noteDurations9[curentNote];
+        tone(buzzer1, melody9[curentNote]);
+        delay(noteDuration);
+        noTone(buzzer1);
+      }
+    }
+  }
+}
+
+
+
 
 
 void loop() {

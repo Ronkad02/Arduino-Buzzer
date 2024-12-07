@@ -173,22 +173,28 @@ pinMode(buzzer1, OUTPUT);
 void pauseLoop ()
 {
   digitalWrite(ledPlayPause, HIGH);
-  bool paus=1;
-  delay(200);
-    while (paus) 
+    while (true) 
     {
+      delay(300);
+      butStatLinksUp = !digitalRead(butLinksUp);
+      butStatRechtsDown = !digitalRead(butRechtsDown);
       butStatPlayPause = !digitalRead(butPlayPause);   //Play
       butStatBreak = !digitalRead(butBreak);
       if (butStatPlayPause)
       {
-        paus = 0;
+        delay(700);
+        break;
       }
       if(butStatBreak)
       {
        digitalWrite(ledPlayPause, LOW);
        break;
       }
-      delay(200);
+      if(butStatLinksUp||butStatRechtsDown)
+      {
+       digitalWrite(ledPlayPause, LOW);
+       loop();
+      }
     }
   digitalWrite(ledPlayPause, LOW);
 }
@@ -638,5 +644,5 @@ void loop() {
     playingSong = 1;
     playSong(ledLichtZaehler);
   }
-
+  loop();
 }

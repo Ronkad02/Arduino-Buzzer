@@ -123,9 +123,19 @@ int pausDurations4[] = {
 };
 
 
-int melody5[] = {};
-int noteDurations5[] = {};
-int pausDurations5[] = {};
+int melody5[] = {
+  // Game of Thrones
+  // Score available at https://musescore.com/user/8407786/scores/2156716
+  392,8, 262,8, 311,16, 349,16, 392,8, 262,8, 311,16, 349,16, //1
+  392,8, 262,8, 311,16, 349,16, 392,8, 262,8, 311,16, 349,16,
+  392,-4, 262,-4, 311,16, 349,16, 392,4, 262,4, 311,16,
+  349,16, 294,-1, 349,-4, 233,-4, 311,16, 294,16, 349,4,
+  233,-4, 311,16, 294,16, 262,-1, 392,-4, 262,-4,
+  311,16, 349,16, 392,4, 262,4, 311,16, 349,16, 294,-1,
+  349,-4, 233,-4, 311,16, 294,16, 349,4, 233,-4,
+  311,16, 294,16, 262,-1, 392,-4, 262,-4,
+  311,16, 349,16, 392,4, 262,4, 311,16, 349,16, 294,-2,
+};
 
 int melody6[] = {};
 int noteDurations6[] = {};
@@ -376,13 +386,13 @@ for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); cure
 
 void song5()
 {
-  for (int curentNote = 0; curentNote < sizeof(melody5) / sizeof(melody5[0]); curentNote++)
-  {
-    int pauseDuration = pausDurations5[curentNote];
+  int tempo = 85;
+  int notes = sizeof(melody5) / sizeof(melody5[0]) / 2;
+  int wholenote = (60000 * 4) / tempo;
+  int divider = 0, noteDuration = 0;
+  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
-
     if (butStatBreak)
     {
       break;
@@ -395,12 +405,18 @@ void song5()
       }
       else
       {
-        int noteDuration = noteDurations5[curentNote];
-        tone(buzzer1, melody5[curentNote]);
-        delay(noteDuration);
-        noTone(buzzer1);
-      }
+    divider = melody5[thisNote + 1];
+    if (divider > 0) {
+      noteDuration = (wholenote) / divider;
+    } else if (divider < 0) {
+      noteDuration = (wholenote) / abs(divider);
+      noteDuration *= 1.5;
     }
+    tone(buzzer1, melody5[thisNote], noteDuration * 0.9);
+    delay(noteDuration);
+    noTone(buzzer1);
+  }
+  }
   }
 }
 

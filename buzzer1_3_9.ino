@@ -16,10 +16,9 @@ int butStatLinksUp = 0;
 int butStatRechtsDown = 0;
 int butStatPlayPause = 0;
 int butStatBreak = 0;
-int b = 1;
 int ledLichtZaehler = 0;
 
-int maxLieder = 9;  //max 15; min 1
+int maxLieder = 11;  //max 15; min 1
 
 
 //Liederarrays
@@ -167,12 +166,19 @@ int pausDurations8[] = {
 };
 
 
-int melody9[] = {
+int melody9[] = {//Wham Last Christmas
+  329, 329, 294, 220, 329, 329, 370, 294, 247, 247,
+  329, 329, 370, 294, 247, 277, 294, 277, 247, 370,
+  329, 247, 370, 392, 370, 329, 247, 277, 294, 277,
+  277, 294, 277, 220
 };
 int noteDurations9[] = {
+  495, 360, 360, 223, 223, 223, 223, 360, 223, 223,
+  223, 223, 360, 360, 223, 223, 223, 223, 768, 768,
+  495, 223, 223, 223, 223, 495, 223, 223, 223, 223,
+  300, 300, 300, 1000
 };
-int pausDurations9[] = {
-};
+
 
 
 void setup()
@@ -496,12 +502,12 @@ void song8()
 
 void song9()
 {
+  delay(50);
   for (int curentNote = 0; curentNote < sizeof(melody9) / sizeof(melody9[0]); curentNote++)
   {
-    int pauseDuration = pausDurations8[curentNote];
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
+    delay(50);
 
     if (butStatBreak)
     {
@@ -603,6 +609,7 @@ void loop() {
   butStatLinksUp = !digitalRead(butLinksUp);
   butStatRechtsDown = !digitalRead(butRechtsDown);
   butStatPlayPause = !digitalRead(butPlayPause);
+  static int b = 1;
   if (butStatPlayPause)
   {
     if (b==1)

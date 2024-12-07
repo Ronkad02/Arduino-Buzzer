@@ -4,10 +4,10 @@ const int butRechtsDown = 10;
 const int butPlayPause = 9;
 const int butBreak = 8;
 const int ledPlayPause = 3;
-const int led0 = 7;
-const int led1 = 6;
-const int led2 = 5;
-const int led3 = 4;
+const int led3 = 7;
+const int led2 = 6;
+const int led1 = 5;
+const int led0 = 4;
 const int buzzer1 =2;
 
 
@@ -74,16 +74,6 @@ int noteDurations2[] = {
   450, 700, 200, 450, 450,
   200, 200, 450, 950
 };
-int pausDurations2[] = {
-  100,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50,
-  50, 50, 50, 50
-};
 
 int melody3[] = {   // Super Mario Brostheme
     /*More songs available at https://github.com/robsoncouto/arduino-songs       
@@ -116,11 +106,6 @@ int noteDurations4[] = {
   500, 500, 500, 350, 150, 500, 350, 150, 1000,
   500, 500, 500, 350, 150, 500, 350, 150, 1000
 };
-int pausDurations4[] = {
-  100,
-  50, 50, 50, 50, 50, 50, 50, 50, 50,
-  50, 50, 50, 50, 50, 50, 50, 50, 50
-};
 
 
 int melody5[] = { // Game of Thrones
@@ -137,24 +122,32 @@ int melody5[] = { // Game of Thrones
 };
 
 int melody6[] = {//a million Dream (the greates Showman)
-    246, 246, 261, 294, 294, 261, 246, 261, 294, 294,
-    261, 246, 261, 294, 294, 261, 329, 329, 261, 246,
-    246, 392, 440, 246, 294, 329, 131, 147, 440
-};
+  246, 246, 261, 294, 294, 261, 246, 261, 294, 294, 261, 246, 261, 294, 294, 261, 
+  330, 330, 261, 246, 246, 196, 220, 246, 294, 330
+  };
 int noteDurations6[] = {
-    200, 450, 200, 200, 700, 200, 450, 200, 200, 700,
-    200, 450, 200, 200, 450, 200, 200, 450, 200, 200,
-    1450, 200, 200, 950, 950, 950, 950, 950, 950
-};
+  200, 450, 200, 225, 725, 200, 450, 200, 225, 725, 200, 450, 200, 225, 475, 200,
+  225, 475, 200, 225, 1475, 200, 200, 950, 950, 950
+  };
 int pausDurations6[] = {
-    50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
-    50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
-    50, 50, 50, 50, 50, 50, 50, 50, 50
-};
+  50, 50, 50, 0, 50, 50, 50, 50, 0, 50, 50, 50, 50, 0, 50, 50, 
+  0, 50, 50, 0, 50, 50, 50, 50, 50, 50
+  };
 
-int melody7[] = {};
-int noteDurations7[] = {};
-int pausDurations7[] = {};
+
+int melody7[] = {//Für Elise (Beethoven)
+  330, 311, 330, 311, 330, 246, 294, 261, 220, 130, 330, 220, 246, 330, 208, 246, 261, 330, 311, 
+  330, 311, 330, 246, 294, 261, 220, 130, 330, 220, 246, 261, 246, 220
+  };
+int noteDurations7[] = {
+  171, 171, 171, 171, 171, 171, 171, 171, 632, 171, 171, 171, 491, 171, 171, 171, 391, 
+  171, 171, 171, 171, 171, 171, 171, 171, 632, 171, 171, 171, 491, 171, 171, 391
+  };
+int pausDurations7[] = { 100,
+  50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 150, 50, 50, 50, 491, 
+  50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 150, 50, 50, 50
+  };
+
 
 int melody8[] = {};
 int noteDurations8[] = {};
@@ -218,66 +211,20 @@ void pauseLoop ()
 
 void ledlichter(int a)
 {
-  if(a>maxLieder)   //setzt 
+  if(a>maxLieder)   //setzt a
   {
     a = 0;
     ledLichtZaehler = 0;
   }
-  if(a<0)   //setzt 
+  else if(a<0)   //setzt a
   {
     a = maxLieder;
     ledLichtZaehler = maxLieder;
   }
-  if (a==0)                   //wenn a = 0, alles LOW
-  {
-    digitalWrite(led0, LOW);
-    digitalWrite(led1, LOW);
-    digitalWrite(led2, LOW);
-    digitalWrite(led3, LOW);
-  }
-  else
-    {
-    if (a%2!=0) 	            //led0 High, wenn a ungerade
-    {
-      digitalWrite(led0, HIGH);
-      a--;
-    }
-      else
-      {
-        digitalWrite(led0, LOW);
-      }
-    
-    if (a-8>=0)               //led3 2^3, HiGH, wenn a>=2^3=8
-    {
-      digitalWrite(led3, HIGH);
-      a=a-8;
-    }
-      else
-      {
-        digitalWrite(led3, LOW);
-     }
-
-        if (a-4>=0)           //led2 2^2, HIGH, wenn a>=2^2=4
-    {
-      digitalWrite(led2, HIGH);
-      a=a-4;
-    }
-      else
-      {
-        digitalWrite(led2, LOW);
-     }
-
-    if (a-2>=0)               //led1 2^1, HIGH, wenn a>=2
-    {
-      digitalWrite(led1, HIGH);
-      a=a-2;
-    }
-      else
-      {
-        digitalWrite(led1, LOW);
-     }
-
-  }
+  digitalWrite(led3, (a & 8));    //prüft, ob a im 4ten bit = 1 ist (8=2^3=4.bit)
+  digitalWrite(led2, (a & 4));
+  digitalWrite(led1, (a & 2));
+  digitalWrite(led0, (a & 1));
 }
 
 void song1()
@@ -312,12 +259,12 @@ void song1()
 
 void song2()
 { 
+  delay (50);
   for (int curentNote = 0; curentNote < sizeof(melody2) / sizeof(melody2[0]); curentNote++)
   {
-    int pauseDuration = pausDurations2[curentNote];
     butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
     butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
+    delay(50);
       if(butStatBreak)
       {
        break;
@@ -378,12 +325,12 @@ void song3()
 
 void song4()
 {
+  delay (50);
 for (int curentNote = 0; curentNote < sizeof(melody4) / sizeof(melody4[0]); curentNote++)
   {
-    int pauseDuration = pausDurations4[curentNote];
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
-    delay(pauseDuration);
+    delay(50);
 
     if (butStatBreak)
     {
@@ -450,7 +397,6 @@ void song6()
     butStatPlayPause = !digitalRead(butPlayPause);
     butStatBreak = !digitalRead(butBreak);
     delay(pauseDuration);
-
     if (butStatBreak)
     {
       break;

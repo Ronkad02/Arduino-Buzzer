@@ -21,6 +21,7 @@ bool playingSong = 0;
 
 int maxLieder = 15;  //max 15; min 1
 
+//Liederarrays
 int melody1[] = {   //Happy Birthday 2 Strophen
   238, 238, 267, 238, 317, 297,
   238, 238, 267, 238, 356, 317,
@@ -31,8 +32,6 @@ int melody1[] = {   //Happy Birthday 2 Strophen
   238, 238, 475, 396, 317, 297, 267,
   419, 419, 396, 317, 356, 317
 };
-
-
 int noteDurations1[] = {
   200, 200, 450, 450, 450, 950,
   200, 200, 450, 450, 450, 950,
@@ -43,8 +42,8 @@ int noteDurations1[] = {
   200, 200, 450, 450, 450, 450, 950,
   200, 200, 450, 450, 450, 950
 };
-
 int pausDurations1[] = {
+  100,
   50, 50, 50, 50, 50, 50,
   50, 50, 50, 50, 50, 50,
   50, 50, 50, 50, 50, 50, 50,
@@ -55,8 +54,12 @@ int pausDurations1[] = {
   50, 50, 50, 50, 50, 50
 };
 
-//Hier sollen die Arrays hin für Melody und Duration und Pausendealay
-//oder Melody und Duration und Duration verzweifachen und doppelt durch gehen(einmal mit Melody und einmal mit pausen aka Melodyduration, Pausenduration, Melodyduration,...)
+
+
+
+
+
+
 
 void setup()
 {
@@ -81,21 +84,45 @@ bool paus=0;
 
 switch (a)
 {
-  case 1:
+case 1:
+{
+  
+  for (int curentNote = 0; curentNote < sizeof(melody1) / sizeof(melody1[0]); curentNote++)
   {
-    
-    for (int curentNote = 0; curentNote < sizeof(melody1) / sizeof(melody1[0]); curentNote++)
-    {
-        int noteDuration = noteDurations1[curentNote];
-        int pauseDuration = pausDurations1[curentNote];
-        tone(buzzer1, melody1[curentNote]);
-        delay(noteDuration);
+    int pauseDuration = pausDurations1[curentNote];
+    butStatPlayPause = !digitalRead(butPlayPause);   //nur Pause
+    butStatBreak = !digitalRead(butBreak);
+    delay(pauseDuration);
+      if(butStatBreak)
+      {
+       break;
+      }
+        else
+        {
+         if (butStatPlayPause) //macht pause, durch while loop, geht erst weigter nach erneuten button drücken mit delay
+          {
+            paus=1;
+            delay(200);
+              while (paus) 
+              {
+                butStatPlayPause = !digitalRead(butPlayPause);   //Play
+                 if (butStatPlayPause)
+                  {
+                    paus = 0;
+                  }
+                delay(200);
+              }
+          } 
+            else  //eine Note im Array abspielen und eine pause machen nach der Note (Pause durch array oder dauerhafte zeit festlegen)
+            {
+              int noteDuration = noteDurations1[curentNote];
+              tone(buzzer1, melody1[curentNote]);
+             delay(noteDuration);
 
-        noTone(buzzer1);
-        delay(pauseDuration);
-
-    }
-
+             noTone(buzzer1);
+            }
+        }
+  } 
 break;
 }
 /*case 2:
@@ -142,8 +169,10 @@ case 15:
 break;
 */
 
+
 }
 }
+
 
 void ledlichter(int a)
 {

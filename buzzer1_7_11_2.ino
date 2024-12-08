@@ -11,8 +11,6 @@ const short ledPlayPause = 3;
 const short buzzer1 = 2;
 
 
-
-bool butStatStart = 0;
 bool butStatLinksDown = 0;
 bool butStatRechtsUp = 0;
 bool butStatPlayPause = 0;

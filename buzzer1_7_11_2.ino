@@ -3,10 +3,10 @@ const short butLinksDown = 9;
 const short butPlayPause = 10;
 const short butRechtsUp = 11;
 const short butBreak = 8;
-const short led0 = 4;
-const short led1 = 5;
-const short led2 = 6;
-const short led3 = 7;
+const short led0 = 7;
+const short led1 = 6;
+const short led2 = 5;
+const short led3 = 4;
 const short ledPlayPause = 3;
 const short buzzer1 = 2;
 
@@ -17,7 +17,7 @@ bool butStatPlayPause = 0;
 bool butStatBreak = 0;
 short ledLichtZaehler = 0;
 
-unsigned char maxLieder = 11;  //max 15; min 1
+unsigned char maxLieder = 12;  //max 15; min 1
 
 
 //Liederarrays
@@ -202,12 +202,14 @@ short noteDurations11[] = {
   211, 472, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 211, 472
 };
 
-short melodyino[] = {  //Intro
-  233, 233, 294, 233, 294, 233
+short melody12[] = {  //Terraria
+  784, 370, 494, 494, 523, 659, 587, 392, 392, 392, 587, 784, 880
 };
-short noteDurationsino[] = { 
-  250, 100, 400, 250, 250, 250, 850
+short noteDurations12[] = { 
+  450, 200, 450, 200, 200, 200, 200, 450, 450, 200, 200, 200, 450
 };
+
+
 void ar2song(short melody[], short noteDurations[], unsigned char arraySize);
 
 void setup(){
@@ -221,7 +223,7 @@ pinMode(led1, OUTPUT);
 pinMode(led2, OUTPUT);
 pinMode(led3, OUTPUT);
 pinMode(buzzer1, OUTPUT);
-ar2song(melodyino, noteDurationsino, sizeof(melodyino) / sizeof(melodyino[0]));
+ar2song(melody12, noteDurations12, sizeof(melody12) / sizeof(melody12[0]));
 }
 
 
@@ -544,6 +546,9 @@ case 10:{
 case 11:{
     ar2song(melody11, noteDurations11, sizeof(melody11) / sizeof(melody11[0]));
     break;
+}
+case 12:{
+    ar2song(melody12, noteDurations12, sizeof(melody12) / sizeof(melody12[0]));
 }
 }
 }
